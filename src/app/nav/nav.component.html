@@ -8,22 +8,30 @@
         <ul class="navbar-nav mr-auto">
           
           <li class="nav-item">
-            <a class="nav-link" routerLink='/login' routerLinkActive='active'>Login</a>
+            <a class="nav-link" routerLink='/login' routerLinkActive='active' *ngIf="!loggedIn()">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink='/register' routerLinkActive='active'>Register</a>
+            <a class="nav-link" routerLink='/register' routerLinkActive='active' *ngIf="!loggedIn()">Register</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink='/tweets' routerLinkActive='active'>Tweets</a>
+            <a class="nav-link" routerLink='/tweets' routerLinkActive='active' *ngIf="loggedIn()">Tweets</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink='/users' routerLinkActive='active'>All Users</a>
+            <a class="nav-link" routerLink='/users' routerLinkActive='active' *ngIf="loggedIn()">All Users</a>
           </li>
           
         </ul>
-        <div class="form-inline mt-2 mt-md-0">
-         
-          <a style="color:white;cursor:pointer" ><img src="assets/outline_logout_white_24dp.png">Logout</a>
+        <div *ngIf="loggedIn()" class="dropdown" dropdown>
+          <a class="dropdown-toggle text-light" dropdownToggle>
+            Welcome {{ userName }}
+          </a>
+          <div class="dropdown-menu mt-3" *dropdownMenu> 
+            
+           
+            <a class="dropdown-item" (click)="logout()"
+              ><i class="fa fa-sign-out"></i> Logout</a
+            >
+          </div>
         </div>
       </div>
     </div>

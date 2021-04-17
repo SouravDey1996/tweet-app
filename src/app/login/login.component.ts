@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../_services/auth.service';
 import { ForgetPassPopupComponent } from './forget-pass-popup/forget-pass-popup.component';
 
 @Component({
@@ -8,8 +11,8 @@ import { ForgetPassPopupComponent } from './forget-pass-popup/forget-pass-popup.
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private dialog: MatDialog) { }
+model:any= {};
+  constructor(private dialog: MatDialog,private authService:AuthService,private toastr:ToastrService,private route:Router) { }
 
   ngOnInit(): void {
   }
@@ -18,4 +21,19 @@ export class LoginComponent implements OnInit {
       width: '500px',
     });
   }
+
+  login(){
+    this.authService.login(this.model).subscribe(next => {
+      this.toastr.success('Logged In successfully!');
+      
+    }, error => {
+      console.log(error);
+      this.toastr.error(error.error);
+    }, () => {
+      this.route.navigate(['/tweets']);
+    }
+    );
+  }
+
+  
 }

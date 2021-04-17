@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TweetsComponent implements OnInit {
   tweetData:any;
+  userName:any;
 mockTweet=[{
   "loginId":'@sourav',
   "name":'Sourav Dey',
@@ -52,10 +54,12 @@ mockTweet=[{
   ]
 
 }]
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
-    console.log(this.tweetData)
+    console.log(this.tweetData);
+    this.userName=localStorage.getItem('token');
+    
   }
 postTweet(){
   

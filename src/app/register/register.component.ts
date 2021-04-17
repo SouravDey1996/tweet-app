@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,7 +14,7 @@ export class RegisterComponent implements OnInit {
 
 
 
-  constructor(private router:Router,private toastr: ToastrService) { }
+  constructor(private router:Router,private toastr: ToastrService,private http:HttpClient) { }
 
   ngOnInit(): void {
     console.log('inside registers');
@@ -23,7 +24,7 @@ initializeForm(){
   this.registerForm=new FormGroup({
     firstName:new FormControl('',Validators.required),
     lastName:new FormControl('',Validators.required),
-    email:new FormControl('',Validators.required),
+    email:new FormControl('',[Validators.required,  Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
     password:new FormControl('',[Validators.required,Validators.minLength(4),Validators.maxLength(8)]),
     confirmPassword:new FormControl('',[Validators.required,this.matchValues('password')]),
     loginID:new FormControl('',Validators.required),
@@ -44,9 +45,15 @@ matchValues(matchTo:string):ValidatorFn{
 }
   register(){
     if(this.registerForm.valid){
-    console.log(this.registerForm.value);
-    this.toastr.success('Registration Successful!')
+    
+    this.http.post('http://localhost:5000/tweetapp/register/user',this.registerForm.value).subscribe((result)=>{
+      this.toastr.success('Registration Successful!')
     this.router.navigate(['/login'])
+    },
+    error=>{
+      this.toastr.error(error.error);
+    })
+    
     }
     else{
       this.toastr.error('Registration Failed')

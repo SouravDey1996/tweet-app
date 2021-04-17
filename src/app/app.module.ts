@@ -17,6 +17,8 @@ import {MatFormFieldModule} from '@angular/material/form-field'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HashtagMentionColLibModule } from 'hashtag-mention-colorizer';
 import { ToastrModule } from 'ngx-toastr';
+import { HttpClientModule} from '@angular/common/http';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [						
@@ -34,7 +36,9 @@ import { ToastrModule } from 'ngx-toastr';
     MatFormFieldModule,
     FormsModule,
     HashtagMentionColLibModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

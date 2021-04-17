@@ -34,8 +34,9 @@
                                 <div class="col-md-6">
                                     <input type="email" 
                                     [class.is-invalid]='registerForm.get("email").errors && registerForm.get("email").touched'
-                                    class="form-control" formControlName="email">
-                                    <div class='invalid-feedback'>Please enter Email</div>
+                                    class="form-control" formControlName="email" >
+                                    <div *ngIf="registerForm.get('email').hasError('required')" class='invalid-feedback'>Please enter Email</div>
+                                    <div *ngIf="registerForm.get('email').hasError('pattern')" class='invalid-feedback'>Invalid Email Address</div>
                                 </div>
                                 
                             </div>
